@@ -30,23 +30,67 @@ const months =[
   {id:11,name:"listopad",startFrom:4,dayAmount:30},
   {id:12,name:"grudzien",startFrom:4,dayAmount:30}
 ]
-let displayMonth;
 
 
 
-class MonthButton extends React.Component{
-  constructor(props) {
-    super(props);
-    this.handleClick = this.handleClick.bind(this)
-  }  
 
-  handleClick(monthID){
+
+function MonthButton(){
+  // constructor(props) {
+  //   super(props);
+  //   this.handleClick = this.handleClick.bind(this)
+  //   this.state={
+      
+  //   }
+  // }  
+  let [displayMonth,setDisplayMonth] = useState();
+
+  function handleClick(monthID){
+    console.log( months[monthID])
+    let len
+       setDisplayMonth( months.map((day, i)=>{
+         if(day.id==monthID)
+         {
+        for(let x=0; x<day.startFrom;x++){
+          return(
+            <div className='day'> 
+  
+            </div>
+          )
+        }
+        for(let j=day.startFrom; j<day.dayAmount;j++){
+          return(
+            <div className='day'>
+                {j}
+            </div>
+          )
+        }
+        for(let y=day.dayAmount; y<35-day.dayAmount;y++){
+          return(
+            <div className='day'>
+  
+            </div>
+          )
+        }
+      len = displayMonth.length;
+  
+      for(let i = 0; i < len; i++ ){
+        displayMonth[i] && displayMonth.push(displayMonth[i]);  
+      }
+      displayMonth.splice(0 , len);  
+  
+      console.log(displayMonth)
+    }   
+    }))
+      
+  
+    
   }
-  render(){
+  
     return(
       <td><button onClick={()=>this.handleClick(this.props.monthID)}>{this.props.name}</button></td>
     )
-  }
+  
 }
 const year = months.map((row,i)=>{
   if(i%4==0){
@@ -68,15 +112,15 @@ const year = months.map((row,i)=>{
 class Calendar extends React.Component{
   render(){
     return(
-      <body>
+      <div>
       <table>
         <tr>
           <th colSpan={4}>2022</th>
         </tr>
         {year}
       </table>
-      {/* <div className='days'>{displayMonth}</div> */}
-      </body>
+      <div className='days'>{displayMonth}</div>
+      </div>
     )
   }
 }
