@@ -3,15 +3,16 @@ import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import React, { useState } from 'react';
+import react from 'react';
 
 const daysOfWeek = [
-  "Sunday",
-  "Monday",
-  "Tuesday",
-  "Wednesday",
-  "Thursday",
-  "Friday",
-  "Saturday"
+  {name: "niedziela"},
+  {name:"poniedzialek"},
+  {name:"wtorek"},
+  {name:"sroda"},
+  {name:"czwartek"},
+  {name:"piatek"},
+  {name:"sobota"}
 ];
 const months =[
   {id:1,name:"styczen",startFrom:4,dayAmount:30},
@@ -31,66 +32,169 @@ const months =[
   {id:12,name:"grudzien",startFrom:4,dayAmount:30}
 ]
 
+let monthName;
+/*let siemaEniu;
+ let displayMonth;
+function DaysOfMonth(){
+let [displayMonth,setDisplayMonth] = useState();
+let papadżi = (months.map((day, i)=>{
+  if(day.id==siemaEniu)
+  {
+ for(let x=0; x<day.startFrom;x++){
+   return(
+     <div className='day'> 
 
+     </div>
+   )
+ }
+ for(let j=day.startFrom; j<day.dayAmount;j++){
+   return(
+     <div className='day'>
+         {j}
+     </div>
+   )
+ }
+ for(let y=day.dayAmount; y<35-day.dayAmount;y++){
+   return(
+     <div className='day'>
 
+     </div>
+   )
+ }
+}   
+}))
+let len;
+console.log(papadżi.length)
+console.log(papadżi)
+len = papadżi.length;
 
-
-function MonthButton(){
-  // constructor(props) {
-  //   super(props);
-  //   this.handleClick = this.handleClick.bind(this)
-  //   this.state={
+for(let i = 0; i < len; i++ ){
+  papadżi[i] && papadżi.push(papadżi[i]);  
+}
+papadżi.splice(0 , len);  
+setDisplayMonth(papadżi);
+console.table(displayMonth)
+return(
+  <tr>
+  <td>
+    {displayMonth}
+  </td>
+</tr>
+)
+}
+*/
+const week= daysOfWeek.map((day, i)=>{
+  return(
+  <th key={day+i}>{day.name}</th>
+  )
+})
+function GetMonthName(){
+  let [selectedMonth,selectMonth]=useState();
+  selectMonth(monthName)
+  return(
+    
+    <th colSpan={7}>{selectedMonth}</th>
+  )
+  
+}
+class MonthTable extends react.Component{
+  constructor(props) {
+    super(props);
+    // this.handleClick = this.handleClick.bind(this)
+    this.state={
+      // test: displayMonth
       
-  //   }
-  // }  
-  let [displayMonth,setDisplayMonth] = useState();
+    }
+  }
+    render(){
+      return (
+         <table>
+           <tr>
+             <GetMonthName/>
+           </tr>
+           <tr>
+             {week}
+           </tr>
+           {/* <DaysOfMonth/> */}
+         </table>
+      )
+    }
+  }  
+  
 
-  function handleClick(monthID){
-    console.log( months[monthID])
-    let len
-       setDisplayMonth( months.map((day, i)=>{
-         if(day.id==monthID)
-         {
-        for(let x=0; x<day.startFrom;x++){
-          return(
-            <div className='day'> 
-  
-            </div>
-          )
-        }
-        for(let j=day.startFrom; j<day.dayAmount;j++){
-          return(
-            <div className='day'>
-                {j}
-            </div>
-          )
-        }
-        for(let y=day.dayAmount; y<35-day.dayAmount;y++){
-          return(
-            <div className='day'>
-  
-            </div>
-          )
-        }
-      len = displayMonth.length;
-  
-      for(let i = 0; i < len; i++ ){
-        displayMonth[i] && displayMonth.push(displayMonth[i]);  
-      }
-      displayMonth.splice(0 , len);  
-  
-      console.log(displayMonth)
-    }   
-    }))
+
+
+class MonthButton extends react.Component{
+  constructor(props) {
+    super(props);
+    this.handleClick = this.handleClick.bind(this)
+    this.state={
+      // test :[[]]
       
+    }
+  }  
+
+
+   handleClick(monthID){
+    monthName = months[monthID].name;
+    
+    //  siemaEniu= monthID
+    //    displayMonth= months.map((day, i)=>{
+    //      if(day.id==monthID)
+    //      {
+    //     for(let x=0; x<day.startFrom;x++){
+    //       return(
+    //         <div className='day'> 
+  
+    //         </div>
+    //       )
+    //     }
+    //     for(let j=day.startFrom; j<day.dayAmount;j++){
+    //       return(
+    //         <div className='day'>
+    //             {j}
+    //         </div>
+    //       )
+    //     }
+    //     for(let y=day.dayAmount; y<35-day.dayAmount;y++){
+    //       return(
+    //         <div className='day'>
+  
+    //         </div>
+    //       )
+    //     }
+      
+       
+    // }   
+       
+    // })
+    // let len;
+    //   len = displayMonth.length;
+  
+    //   for(let i = 0; i < len; i++ ){
+    //     displayMonth[i] && displayMonth.push(displayMonth[i]);  
+    //   }
+    //   displayMonth.splice(0 , len);  
+  
+    //   console.table(displayMonth)
+    //   console.log(displayMonth)
+
+    //   this.setState({
+    //     test: displayMonth
+    //   })
+       
+    //   console.table(this.state.displayMonth)
+    //   console.log(this.state.displayMonth)
   
     
   }
-  
+  render(){
+    // let [displayMonth,setDisplayMonth] = useState();
+    
     return(
       <td><button onClick={()=>this.handleClick(this.props.monthID)}>{this.props.name}</button></td>
     )
-  
+  }
 }
 const year = months.map((row,i)=>{
   if(i%4==0){
@@ -119,7 +223,7 @@ class Calendar extends React.Component{
         </tr>
         {year}
       </table>
-      <div className='days'>{displayMonth}</div>
+      <MonthTable/>
       </div>
     )
   }
